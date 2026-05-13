@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import { animateStaggeredItems } from "$lib/utils/animations";
 
   let el: HTMLElement;
   let visible = $state(false);
@@ -18,6 +19,8 @@
   ];
 
   onMount(() => {
+    if (!el) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) visible = true;
@@ -25,7 +28,18 @@
       { threshold: 0.15, rootMargin: "0px 0px -80px 0px" },
     );
     if (el) observer.observe(el);
-    return () => observer.disconnect();
+    const cleanupTechBadges = animateStaggeredItems(el, {
+      selector: ".tech-chip",
+      x: -22,
+      scale: 0.96,
+      duration: 0.65,
+      stagger: 0.08,
+    });
+
+    return () => {
+      observer.disconnect();
+      cleanupTechBadges();
+    };
   });
 </script>
 
@@ -135,6 +149,7 @@
     color: var(--text-muted);
     transition: all 0.2s;
     cursor: default;
+    will-change: opacity, transform;
   }
 
   .tech-chip:hover {

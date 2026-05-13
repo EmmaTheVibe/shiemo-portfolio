@@ -27,7 +27,6 @@
 }
 
 html {
-  scroll-behavior: smooth;
   scrollbar-width: thin;
   scrollbar-color: var(--accent) var(--bg-2);
 }
@@ -138,6 +137,18 @@ section {
   background: var(--accent-2);
   box-shadow: 0 0 30px color-mix(in srgb, var(--accent) 50%, transparent);
   transform: translateY(-1px);
+}
+
+.btn-primary:disabled {
+  opacity: 0.58;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.btn-primary:disabled:hover {
+  background: var(--accent);
+  box-shadow: none;
+  transform: none;
 }
 
 .btn-secondary {

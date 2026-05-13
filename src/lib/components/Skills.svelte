@@ -1,8 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import { animateStaggeredItems } from "$lib/utils/animations";
 
   let el: HTMLElement;
-  let visible = $state(false);
 
   const toolbox = [
     {
@@ -33,27 +33,27 @@
   ];
 
   onMount(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) visible = true;
-      },
-      { threshold: 0.15, rootMargin: "0px 0px -80px 0px" },
-    );
-    if (el) observer.observe(el);
-    return () => observer.disconnect();
+    if (!el) return;
+    return animateStaggeredItems(el, {
+      selector: ".tool-card",
+      x: -24,
+      scale: 0.96,
+      duration: 0.7,
+      stagger: 0.1,
+    });
   });
 </script>
 
-<section id="skills" bind:this={el} class="skills" class:visible>
+<section id="skills" bind:this={el} class="skills">
   <div class="skills-inner">
-    <p class="section-label">My Toolbox</p>
+    <p class="section-label">My Services</p>
     <h2 class="section-title">
-      What I bring to the table<span class="accent-dot">.</span>
+      What I offer<span class="accent-dot">.</span>
     </h2>
 
     <div class="toolbox-grid">
-      {#each toolbox as item, i}
-        <div class="tool-card glass" style="transition-delay: {i * 80}ms">
+      {#each toolbox as item}
+        <div class="tool-card glass">
           <span class="tool-icon mono">{item.icon}</span>
           <h3 class="tool-label">{item.label}</h3>
           <p class="tool-desc">{item.desc}</p>
@@ -98,19 +98,12 @@
     padding: 28px 20px;
     border-radius: 16px;
     text-align: center;
-    opacity: 0;
-    transform: translateY(20px);
     transition:
-      opacity 0.5s ease,
-      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.2s,
       border-color 0.2s,
       background 0.2s;
     cursor: default;
-  }
-
-  .skills.visible .tool-card {
-    opacity: 1;
-    transform: translateY(0);
+    will-change: opacity, transform;
   }
 
   .tool-card:hover {

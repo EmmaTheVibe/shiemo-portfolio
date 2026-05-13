@@ -1,11 +1,29 @@
 <script lang="ts">
-  import { social } from "$lib/data/projects";
+  import emailjs from "@emailjs/browser";
+  import { onDestroy } from "svelte";
+  import {
+    PUBLIC_EMAILJS_PUBLIC_KEY,
+    PUBLIC_EMAILJS_SERVICE_ID,
+    PUBLIC_EMAILJS_TEMPLATE_ID,
+  } from "$env/static/public";
 
   let name = $state("");
   let email = $state("");
   let message = $state("");
-  let status = $state<"idle" | "sending" | "sent" | "error">("idle");
+  let status = $state<"idle" | "sending">("idle");
+  let toast = $state<{ type: "success" | "error"; message: string } | null>(
+    null,
+  );
   let errors = $state({ name: "", email: "", message: "" });
+  let toastTimeout: ReturnType<typeof setTimeout> | undefined;
+
+  function showToast(type: "success" | "error", toastMessage: string) {
+    if (toastTimeout) clearTimeout(toastTimeout);
+    toast = { type, message: toastMessage };
+    toastTimeout = setTimeout(() => {
+      toast = null;
+    }, 4200);
+  }
 
   function validate() {
     const next = { name: "", email: "", message: "" };
@@ -25,29 +43,43 @@
 
   function clearError(field: "name" | "email" | "message") {
     if (errors[field]) errors = { ...errors, [field]: "" };
-    if (status === "error" || status === "sent") status = "idle";
   }
 
   async function handleSubmit() {
     if (!validate()) {
-      status = "error";
+      showToast("error", "Please check the highlighted fields.");
       return;
     }
 
     status = "sending";
-    const subject = encodeURIComponent(`Portfolio Contact from ${name.trim()}`);
-    const body = encodeURIComponent(
-      `Name: ${name.trim()}\nEmail: ${email.trim()}\n\n${message.trim()}`,
-    );
-    window.location.href = `mailto:${social.email}?subject=${subject}&body=${body}`;
 
-    setTimeout(() => {
-      status = "sent";
+    try {
+      await emailjs.send(
+        PUBLIC_EMAILJS_SERVICE_ID,
+        PUBLIC_EMAILJS_TEMPLATE_ID,
+        {
+          name: name.trim(),
+          email: email.trim(),
+          message: message.trim(),
+        },
+        PUBLIC_EMAILJS_PUBLIC_KEY,
+      );
+
       name = "";
       email = "";
       message = "";
-    }, 800);
+      showToast("success", "Message sent. I'll get back to you soon.");
+    } catch (error) {
+      console.error("Email send error:", error);
+      showToast("error", "Message failed to send. Please try again.");
+    } finally {
+      status = "idle";
+    }
   }
+
+  onDestroy(() => {
+    if (toastTimeout) clearTimeout(toastTimeout);
+  });
 </script>
 
 <div class="contact-right glass">
@@ -115,9 +147,11 @@
     <button
       type="submit"
       class="btn-primary submit-btn"
-      disabled={status === "sending" || status === "sent"}
+      disabled={status === "sending"}
     >
-      {#if status === "idle"}
+      {#if status === "sending"}
+        Sending...
+      {:else}
         Get In Touch
         <svg
           width="16"
@@ -130,15 +164,20 @@
             points="12 5 19 12 12 19"
           /></svg
         >
-      {:else if status === "sending"}
-        Opening mail client...
-      {:else if status === "sent"}
-        Message ready
-      {:else if status === "error"}
-        Check highlighted fields
       {/if}
     </button>
   </form>
+
+  {#if toast}
+    <div
+      class:success={toast.type === "success"}
+      class="toast"
+      role="status"
+      aria-live="polite"
+    >
+      {toast.message}
+    </div>
+  {/if}
 </div>
 
 <style>
@@ -219,5 +258,35 @@
     width: 100%;
     justify-content: center;
     padding: 14px;
+  }
+
+  .toast {
+    margin-top: 18px;
+    padding: 12px 14px;
+    border: 1px solid color-mix(in srgb, #f87171 36%, transparent);
+    border-radius: 8px;
+    background: color-mix(in srgb, #f87171 12%, var(--bg-2));
+    color: #fecaca;
+    font-size: 0.82rem;
+    line-height: 1.4;
+    animation: toast-in 0.34s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.22);
+  }
+
+  .toast.success {
+    border-color: color-mix(in srgb, #22c55e 36%, transparent);
+    background: color-mix(in srgb, #22c55e 12%, var(--bg-2));
+    color: #bbf7d0;
+  }
+
+  @keyframes toast-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
   }
 </style>

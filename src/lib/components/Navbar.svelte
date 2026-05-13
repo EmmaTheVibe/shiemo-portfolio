@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import { page } from "$app/state";
   import { fly } from "svelte/transition";
   import { social } from "$lib/data/projects";
 
@@ -48,6 +49,11 @@
     menuOpen = false;
   }
 
+  function isActive(href: string) {
+    if (href === "/") return page.url.pathname === "/";
+    return page.url.pathname === href || page.url.pathname.startsWith(`${href}/`);
+  }
+
   function applyPalette(name: string) {
     const selected = palettes.find((item) => item.name === name) ?? palettes[0];
     const root = document.documentElement;
@@ -74,7 +80,15 @@
 
     <ul class="nav-links">
       {#each links as link}
-        <li><a href={link.href}>{link.label}</a></li>
+        <li>
+          <a
+            href={link.href}
+            class:active-link={isActive(link.href)}
+            aria-current={isActive(link.href) ? "page" : undefined}
+          >
+            {link.label}
+          </a>
+        </li>
       {/each}
     </ul>
 
@@ -131,7 +145,14 @@
       transition:fly={{ y: -12, duration: 220 }}
     >
       {#each links as link}
-        <a href={link.href} onclick={closeMenu}>{link.label}</a>
+        <a
+          href={link.href}
+          onclick={closeMenu}
+          class:active-link={isActive(link.href)}
+          aria-current={isActive(link.href) ? "page" : undefined}
+        >
+          {link.label}
+        </a>
       {/each}
       <div class="mobile-palette" aria-label="Color palette">
         {#each palettes as item}
@@ -255,8 +276,14 @@
     color: var(--text);
   }
 
-  .nav-links a:hover::after {
+  .nav-links a:hover::after,
+  .nav-links a.active-link::after {
     width: 100%;
+  }
+
+  .nav-links a.active-link,
+  .mobile-menu a.active-link {
+    color: var(--text);
   }
 
   .resume-btn {

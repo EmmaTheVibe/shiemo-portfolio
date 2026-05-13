@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { projects } from "$lib/data/projects";
+  import { animateProjectCards } from "$lib/utils/animations";
   import ProjectCard from "./ProjectCard.svelte";
 
   const {
@@ -18,22 +19,15 @@
   }>();
 
   let el: HTMLElement;
-  let visible = $state(false);
   let visibleProjects = $derived(projects.slice(0, limit));
 
   onMount(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) visible = true;
-      },
-      { threshold: 0.15, rootMargin: "0px 0px -80px 0px" },
-    );
-    if (el) observer.observe(el);
-    return () => observer.disconnect();
+    if (!el) return;
+    return animateProjectCards(el);
   });
 </script>
 
-<section id="projects" bind:this={el} class="projects" class:visible>
+<section id="projects" bind:this={el} class="projects">
   <div class="projects-inner">
     <div class="section-header">
       <p class="section-label">{label}</p>
@@ -46,8 +40,8 @@
     </div>
 
     <div class="projects-grid">
-      {#each visibleProjects as project, i}
-        <div class="card-wrapper" style="transition-delay: {i * 100}ms">
+      {#each visibleProjects as project}
+        <div class="card-wrapper">
           <ProjectCard {project} />
         </div>
       {/each}
@@ -97,16 +91,7 @@
   }
 
   .card-wrapper {
-    opacity: 0;
-    transform: translateY(30px);
-    transition:
-      opacity 0.6s ease,
-      transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .projects.visible .card-wrapper {
-    opacity: 1;
-    transform: translateY(0);
+    will-change: opacity, transform;
   }
 
   .projects-more {
