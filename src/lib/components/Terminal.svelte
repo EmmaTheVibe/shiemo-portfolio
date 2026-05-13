@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount, tick } from "svelte";
+  import { onDestroy, onMount, tick } from "svelte";
   import TerminalWindow from "./TerminalWindow.svelte";
   import {
     initialTerminalHistory,
@@ -10,8 +10,29 @@
   let input = $state("");
   let history = $state<TerminalLine[]>([]);
   let terminalEl = $state<HTMLElement>();
+  let sectionEl: HTMLElement;
+  let displayedHint = $state("");
   let cmdHistory: string[] = [];
   let cmdHistoryIndex = -1;
+  let hintTimer: ReturnType<typeof setTimeout> | undefined;
+  let hintObserver: IntersectionObserver | undefined;
+  let hintStarted = false;
+
+  const hintText = "Type help to see what you can explore.";
+  const hintPrefixLength = "Type ".length;
+  const hintCommandLength = "help".length;
+  const hintPrefix = $derived(
+    displayedHint.slice(0, Math.min(displayedHint.length, hintPrefixLength)),
+  );
+  const hintCommand = $derived(
+    displayedHint.slice(
+      hintPrefixLength,
+      Math.min(displayedHint.length, hintPrefixLength + hintCommandLength),
+    ),
+  );
+  const hintSuffix = $derived(
+    displayedHint.slice(hintPrefixLength + hintCommandLength),
+  );
 
   function run() {
     const cmd = input.trim().toLowerCase();
@@ -66,19 +87,67 @@
     }
   }
 
+  function startHintTypewriter() {
+    if (hintStarted) return;
+    hintStarted = true;
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    );
+
+    if (prefersReducedMotion.matches) {
+      displayedHint = hintText;
+      return;
+    }
+
+    let index = 0;
+
+    function typeNextCharacter() {
+      displayedHint = hintText.slice(0, index);
+      index += 1;
+
+      if (index <= hintText.length) {
+        hintTimer = setTimeout(typeNextCharacter, 42);
+      }
+    }
+
+    typeNextCharacter();
+  }
+
   onMount(() => {
     history = initialTerminalHistory;
+
+    hintObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        startHintTypewriter();
+        hintObserver?.disconnect();
+      },
+      { threshold: 0.35, rootMargin: "0px 0px -80px 0px" },
+    );
+
+    if (sectionEl) hintObserver.observe(sectionEl);
+  });
+
+  onDestroy(() => {
+    if (hintTimer) clearTimeout(hintTimer);
+    hintObserver?.disconnect();
   });
 </script>
 
-<section id="terminal" class="terminal-section">
+<section id="terminal" bind:this={sectionEl} class="terminal-section">
   <div class="terminal-inner">
     <p class="section-label">Interactive</p>
     <h2 class="section-title">
       Try the terminal<span class="accent-dot">.</span>
     </h2>
-    <p class="terminal-hint">
-      Type <code>help</code> to see what you can explore.
+    <p class="terminal-hint" aria-label={hintText}>
+      <span aria-hidden="true">
+        {hintPrefix}<code>{hintCommand}</code>{hintSuffix}<span
+          class="hint-caret"
+          class:done={displayedHint.length === hintText.length}
+        ></span>
+      </span>
     </p>
 
     <TerminalWindow
@@ -113,6 +182,7 @@
     color: var(--text-muted);
     font-size: 0.9rem;
     margin-bottom: 32px;
+    min-height: 1.6em;
   }
 
   .terminal-hint code {
@@ -121,5 +191,31 @@
     background: color-mix(in srgb, var(--accent) 10%, transparent);
     padding: 2px 8px;
     border-radius: 4px;
+  }
+
+  .hint-caret {
+    display: inline-block;
+    width: 1px;
+    height: 1em;
+    margin-left: 2px;
+    background: var(--accent);
+    vertical-align: -0.12em;
+    animation: caret-blink 0.9s steps(2, start) infinite;
+  }
+
+  .hint-caret.done {
+    opacity: 0;
+    animation: none;
+  }
+
+  @keyframes caret-blink {
+    0%,
+    45% {
+      opacity: 1;
+    }
+    46%,
+    100% {
+      opacity: 0;
+    }
   }
 </style>
