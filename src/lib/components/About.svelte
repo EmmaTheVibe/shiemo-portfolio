@@ -40,7 +40,7 @@
       </p>
       <p class="about-text" style="margin-top: 16px;">
         I enjoy transforming complex problems into simple, elegant and human
-        centered solutions — across SaaS, fintech, and edutech.
+        centered solutions across SaaS, fintech, and edutech.
       </p>
       <a href="/contact" class="more-link">
         More about me
