@@ -6,7 +6,7 @@
   <title>Projects - Onagaumah Emmanuel</title>
   <meta
     name="description"
-    content="A full collection of projects by Onagaumah Emmanuel, including SaaS, fintech, edutech, and frontend engineering work."
+    content="A full collection of my projects, including SaaS, fintech, edutech, and frontend engineering work."
   />
 </svelte:head>
 

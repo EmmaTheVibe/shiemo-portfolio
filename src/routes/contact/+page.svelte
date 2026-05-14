@@ -6,7 +6,7 @@
   <title>Contact - Onagaumah Emmanuel</title>
   <meta
     name="description"
-    content="Contact Onagaumah Emmanuel for software development opportunities, collaborations, and project work."
+    content="Contact me for software development opportunities, collaborations, and project work."
   />
 </svelte:head>
 
