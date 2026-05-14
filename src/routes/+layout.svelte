@@ -11,7 +11,7 @@
 </script>
 
 <svelte:head>
-  <meta property="og:image" content="https://shiemo.dev/og-image.jpg" />
+  <meta property="og:image" content="https://shiemo.dev/socials.jpg" />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://shiemo.dev/og-image.jpg" />
