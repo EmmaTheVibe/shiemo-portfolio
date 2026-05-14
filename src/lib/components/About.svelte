@@ -57,7 +57,7 @@
         centered solutions across SaaS, fintech, and edutech.
       </p>
       <a href="/contact" class="more-link">
-        More about me
+        Reach out
         <svg
           width="14"
           height="14"

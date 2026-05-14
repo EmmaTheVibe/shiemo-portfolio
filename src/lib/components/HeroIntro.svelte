@@ -21,7 +21,7 @@
   </p>
 
   <div class="hero-ctas">
-    <a href="#projects" class="btn-primary">
+    <a href="/projects" class="btn-primary">
       View My Work
       <svg
         width="16"
