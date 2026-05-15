@@ -3,10 +3,12 @@
   import { page } from "$app/state";
   import { fly } from "svelte/transition";
   import { social } from "$lib/data/projects";
+  import { tick } from "svelte";
 
   let menuOpen = $state(false);
   let scrolled = $state(false);
   let palette = $state("blue");
+  let mounted = $state(false);
 
   const links = [
     { label: "Home", href: "/" },
@@ -51,7 +53,9 @@
 
   function isActive(href: string) {
     if (href === "/") return page.url.pathname === "/";
-    return page.url.pathname === href || page.url.pathname.startsWith(`${href}/`);
+    return (
+      page.url.pathname === href || page.url.pathname.startsWith(`${href}/`)
+    );
   }
 
   function applyPalette(name: string) {
@@ -66,7 +70,10 @@
   }
 
   onMount(() => {
+    mounted = true;
+    scrolled = window.scrollY > 40;
     applyPalette(localStorage.getItem("portfolio-palette") ?? "blue");
+    window.addEventListener("scroll", handleScroll, { passive: true });
   });
 </script>
 
@@ -211,7 +218,6 @@
   .nav-inner {
     max-width: 1200px;
     margin: 0 auto;
-    /* padding: 0 24px; */
     display: flex;
     align-items: center;
     gap: 40px;
@@ -358,7 +364,7 @@
   }
 
   .mobile-menu {
-    display: flex;
+    display: none;
     flex-direction: column;
     padding: 16px 24px 24px;
     gap: 4px;
@@ -396,11 +402,20 @@
     color: white !important;
   }
 
+  @media (max-width: 1200px) {
+    .nav-inner {
+      padding: 0 24px;
+    }
+  }
+
   @media (max-width: 768px) {
     .nav-links,
     .resume-btn,
     .palette-toggle {
       display: none;
+    }
+    .mobile-menu {
+      display: flex;
     }
     .hamburger {
       display: flex;
