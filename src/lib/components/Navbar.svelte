@@ -213,7 +213,7 @@
   }
 
   .nav-inner {
-    max-width: 1200px;
+    max-width: 1440px;
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -399,7 +399,7 @@
     color: white !important;
   }
 
-  @media (max-width: 1200px) {
+  @media (max-width: 1440px) {
     .nav-inner {
       padding: 0 24px;
     }

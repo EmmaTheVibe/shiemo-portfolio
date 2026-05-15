@@ -61,7 +61,7 @@
   }
 
   .projects-inner {
-    max-width: 1200px;
+    max-width: 1440px;
     margin: 0 auto;
   }
 
@@ -88,9 +88,11 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
+    align-items: stretch;
   }
 
   .card-wrapper {
+    height: 100%;
     will-change: opacity, transform;
   }
 

@@ -80,6 +80,9 @@
   .card {
     border-radius: 16px;
     overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     cursor: default;
   }
@@ -92,6 +95,7 @@
   .card-image {
     position: relative;
     height: 200px;
+    flex-shrink: 0;
     overflow: hidden;
     background: var(--bg-2);
   }
@@ -119,6 +123,9 @@
 
   .card-body {
     padding: 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
   }
 
   .card-title {
@@ -155,6 +162,7 @@
     display: flex;
     gap: 20px;
     align-items: center;
+    margin-top: auto;
   }
 
   .card-link {

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { social } from '$lib/data/projects';
   const year = new Date().getFullYear();
 </script>
 
@@ -25,10 +24,11 @@
     padding: 32px 24px;
     position: relative;
     z-index: 1;
+    flex-shrink: 0;
   }
 
   .footer-inner {
-    max-width: 1200px;
+    max-width: 1440px;
     margin: 0 auto;
     display: flex;
     align-items: center;

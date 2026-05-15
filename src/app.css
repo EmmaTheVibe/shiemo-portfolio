@@ -27,16 +27,26 @@
 }
 
 html {
+  min-height: 100%;
   scrollbar-width: thin;
   scrollbar-color: var(--accent) var(--bg-2);
 }
 
 body {
+  min-height: 100vh;
+  min-height: 100svh;
   background-color: var(--bg);
   color: var(--text);
   font-family: var(--font-display);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+  width: 100%;
 }
 
 a {

@@ -100,7 +100,7 @@
   }
 
   .about-inner {
-    max-width: 1200px;
+    max-width: 1440px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
