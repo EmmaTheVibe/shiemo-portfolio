@@ -3,7 +3,6 @@
   import { page } from "$app/state";
   import { fly } from "svelte/transition";
   import { social } from "$lib/data/projects";
-  import { tick } from "svelte";
 
   let menuOpen = $state(false);
   let scrolled = $state(false);
@@ -70,10 +69,8 @@
   }
 
   onMount(() => {
-    mounted = true;
-    scrolled = window.scrollY > 40;
     applyPalette(localStorage.getItem("portfolio-palette") ?? "blue");
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    scrolled = window.scrollY > 40;
   });
 </script>
 
