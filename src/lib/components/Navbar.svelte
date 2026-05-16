@@ -6,7 +6,7 @@
 
   let menuOpen = $state(false);
   let scrolled = $state(false);
-  let palette = $state("blue");
+  let palette = $state("green");
   let mounted = $state(false);
 
   const links = [
@@ -69,7 +69,7 @@
   }
 
   onMount(() => {
-    applyPalette(localStorage.getItem("portfolio-palette") ?? "blue");
+    applyPalette(localStorage.getItem("portfolio-palette") ?? "green");
     scrolled = window.scrollY > 40;
   });
 </script>

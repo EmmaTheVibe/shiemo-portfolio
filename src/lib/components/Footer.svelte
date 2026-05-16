@@ -1,5 +1,19 @@
 <script lang="ts">
+  import { page } from "$app/state";
+
   const year = new Date().getFullYear();
+  const links = [
+    { label: "Home", href: "/" },
+    { label: "Projects", href: "/projects" },
+    { label: "Contact", href: "/contact" },
+  ];
+
+  function isActive(href: string) {
+    if (href === "/") return page.url.pathname === "/";
+    return (
+      page.url.pathname === href || page.url.pathname.startsWith(`${href}/`)
+    );
+  }
 </script>
 
 <footer class="footer">
@@ -11,9 +25,15 @@
     </p>
 
     <nav class="footer-links" aria-label="Footer navigation">
-      <a href="/">Home</a>
-      <a href="/projects">Projects</a>
-      <a href="/contact">Contact</a>
+      {#each links as link}
+        <a
+          href={link.href}
+          class:active-link={isActive(link.href)}
+          aria-current={isActive(link.href) ? "page" : undefined}
+        >
+          {link.label}
+        </a>
+      {/each}
     </nav>
   </div>
 </footer>
@@ -73,7 +93,8 @@
     transition: color 0.2s;
   }
 
-  .footer-links a:hover {
+  .footer-links a:hover,
+  .footer-links a.active-link {
     color: var(--text);
   }
 
