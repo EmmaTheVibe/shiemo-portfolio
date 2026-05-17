@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import HeroIntro from "./HeroIntro.svelte";
-  import HeroVisual from "./HeroVisual.svelte";
+  import MouseHead from "./MouseHead.svelte";
 
   let visible = $state(false);
 
@@ -15,7 +15,7 @@
 <section id="home" class="hero">
   <div class="hero-inner">
     <HeroIntro {visible} />
-    <HeroVisual {visible} />
+    <MouseHead {visible} />
   </div>
 
   <div class="scroll-hint" class:visible>
