@@ -161,7 +161,7 @@
     pointer-events: none;
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 1280px) {
     .mouse-head {
       width: 260px;
       height: 300px;
