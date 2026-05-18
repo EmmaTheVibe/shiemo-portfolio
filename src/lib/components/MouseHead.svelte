@@ -1,14 +1,18 @@
 <script lang="ts">
   import { on } from "svelte/events";
-  import { onDestroy } from "svelte";
+  import { onDestroy, onMount } from "svelte";
 
   const { visible = false } = $props<{ visible?: boolean }>();
 
   let containerEl = $state<HTMLDivElement | null>(null);
-  let dotX = $state(180);
-  let dotY = $state(210);
-  let targetX = 180;
-  let targetY = 210;
+  // let dotX = $state(180);
+  // let dotY = $state(210);
+  // let targetX = 180;
+  // let targetY = 210;
+  let dotX = $state(0);
+  let dotY = $state(0);
+  let targetX = 0;
+  let targetY = 0;
   let rafId: number;
 
   let onFace = $derived(dotX > 80 && dotX < 280 && dotY > 60 && dotY < 380);
@@ -38,6 +42,16 @@
       cleanup();
       cancelAnimationFrame(rafId);
     };
+  });
+
+  onMount(() => {
+    if (containerEl) {
+      const rect = containerEl.getBoundingClientRect();
+      dotX = rect.width / 2;
+      dotY = rect.height / 2;
+      targetX = rect.width / 2;
+      targetY = rect.height / 2;
+    }
   });
 </script>
 
