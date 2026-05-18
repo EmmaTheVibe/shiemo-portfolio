@@ -102,6 +102,7 @@
     transform: translateY(20px) scale(0.95);
     transition: all 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
     box-shadow: 0 0 10px 2px var(--accent);
+    cursor: crosshair;
   }
 
   .mouse-head.visible {
