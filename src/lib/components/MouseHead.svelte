@@ -166,6 +166,11 @@
     .mouse-head {
       width: 260px;
       height: 300px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .mouse-head {
       order: -1;
     }
   }
