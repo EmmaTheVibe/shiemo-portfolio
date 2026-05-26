@@ -170,4 +170,11 @@
       gap: 48px;
     }
   }
+
+  @media (max-width: 1280px) {
+    .about {
+      padding-top: 50px;
+      padding-bottom: 50px;
+    }
+  }
 </style>

@@ -218,4 +218,11 @@
       opacity: 0;
     }
   }
+
+  @media (max-width: 1280px) {
+    .terminal-section {
+      padding-top: 50px;
+      padding-bottom: 50px;
+    }
+  }
 </style>

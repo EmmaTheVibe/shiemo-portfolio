@@ -143,4 +143,11 @@
       grid-template-columns: repeat(2, 1fr);
     }
   }
+
+  @media (max-width: 1280px) {
+    .skills {
+      padding-top: 50px;
+      padding-bottom: 50px;
+    }
+  }
 </style>

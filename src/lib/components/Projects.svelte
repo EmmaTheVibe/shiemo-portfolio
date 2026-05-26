@@ -103,6 +103,13 @@
     margin-top: 40px;
   }
 
+  @media (max-width: 1280px) {
+    .projects {
+      padding-top: 50px;
+      padding-bottom: 50px;
+    }
+  }
+
   @media (min-width: 641px) and (max-width: 1024px) {
     .projects-grid:not(.scroll-row) {
       grid-template-columns: repeat(2, 1fr);
