@@ -7,12 +7,14 @@
   const {
     limit = projects.length,
     showAllLink = false,
+    featured = false,
     label = "Featured Projects",
     title = "Things I've built",
     intro = "",
   } = $props<{
     limit?: number;
     showAllLink?: boolean;
+    featured?: boolean;
     label?: string;
     title?: string;
     intro?: string;
@@ -39,7 +41,7 @@
       {/if}
     </div>
 
-    <div class="projects-grid">
+    <div class="projects-grid" class:scroll-row={featured}>
       {#each visibleProjects as project}
         <div class="card-wrapper">
           <ProjectCard {project} />
@@ -92,7 +94,6 @@
   }
 
   .card-wrapper {
-    height: 100%;
     will-change: opacity, transform;
   }
 
@@ -102,9 +103,30 @@
     margin-top: 40px;
   }
 
-  @media (max-width: 1024px) {
-    .projects-grid {
+  @media (min-width: 641px) and (max-width: 1024px) {
+    .projects-grid:not(.scroll-row) {
       grid-template-columns: repeat(2, 1fr);
+    }
+
+    .scroll-row {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 20px;
+      padding-bottom: 12px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .scroll-row::-webkit-scrollbar {
+      display: none;
+    }
+
+    .scroll-row .card-wrapper {
+      flex: 0 0 80%;
+      max-width: 360px;
+      scroll-snap-align: start;
+      align-self: stretch;
     }
   }
 

@@ -13,6 +13,6 @@
 
 <Hero />
 <About />
-<Projects limit={3} showAllLink={true} />
+<Projects limit={3} showAllLink={true} featured={true} />
 <Skills />
 <Terminal />

@@ -1,4 +1,5 @@
 export type Project = {
+  id: number;
   title: string;
   description: string;
   longDescription: string;
@@ -11,6 +12,7 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    id: 1,
     title: "Coinview",
     description:
       "Real-time crypto dashboard with live price charts, market data, and a streaming activity feed.",
@@ -23,18 +25,20 @@ export const projects: Project[] = [
     featured: true,
   },
   {
-    title: "Weather Now",
+    id: 2,
+    title: "Yapp",
     description:
-      "Weather application with auto geolocation, city search, 7-day forecasts and hourly breakdowns.",
+      "End-to-end encrypted real-time chat app with RSA-OAEP + AES-GCM hybrid encryption and WebSocket messaging.",
     longDescription:
-      "Built with Next.js, uses Open-Meteo API for accurate weather forecasts and BigDataCloud for location services. Features include auto geolocation, city search with autocomplete, customizable unit preferences, 7-day forecasts, and hourly breakdowns.",
-    tech: ["Next.js", "TypeScript", "Open-Meteo API"],
-    live: "https://weather-now-seven-kohl.vercel.app/",
-    github: "https://github.com/EmmaTheVibe/weather-now",
-    image: "/weather.avif",
+      "Built with Next.js and a custom FastAPI backend. Features full end-to-end encryption using RSA-OAEP and AES-GCM. The server never sees plaintext. Includes real-time messaging via WebSocket, message delivery receipts, online presence indicators, and a password-protected session unlock flow that decrypts your private key locally.",
+    tech: ["Next.js", "TypeScript", "WebSocket"],
+    live: "https://yapp-mvp.vercel.app/",
+    github: "https://github.com/EmmaTheVibe/yap",
+    image: "/yapp.avif",
     featured: true,
   },
   {
+    id: 3,
     title: "Jadoo Landing Page",
     description:
       "Modern landing page for a travel agency featuring animated card stacks and carousels.",
@@ -47,6 +51,20 @@ export const projects: Project[] = [
     featured: true,
   },
   {
+    id: 4,
+    title: "Weather Now",
+    description:
+      "Weather application with auto geolocation, city search, 7-day forecasts and hourly breakdowns.",
+    longDescription:
+      "Built with Next.js, uses Open-Meteo API for accurate weather forecasts and BigDataCloud for location services. Features include auto geolocation, city search with autocomplete, customizable unit preferences, 7-day forecasts, and hourly breakdowns.",
+    tech: ["Next.js", "TypeScript", "Open-Meteo API"],
+    live: "https://weather-now-seven-kohl.vercel.app/",
+    github: "https://github.com/EmmaTheVibe/weather-now",
+    image: "/weather.avif",
+    featured: true,
+  },
+  {
+    id: 5,
     title: "WAEC Attendance Tracker",
     description:
       "Nationwide digital attendance monitoring system for CBWASSCE examinations.",
@@ -54,11 +72,38 @@ export const projects: Project[] = [
       "Enables nationwide digital attendance monitoring during CBWASSCE examinations, reducing attendance reconciliation time by approximately 50%. Built to handle scale across multiple examination centres simultaneously.",
     tech: ["Next.js", "TypeScript", "PostgreSQL"],
     live: "https://waec-attendance-checker.vercel.app/",
-    github: "https://github.com/EmmaTheVibe/attendance-checker",
+    github: null,
     image: "/waec.avif",
     featured: true,
   },
   {
+    id: 6,
+    title: "Parkway Wallet Site",
+    description:
+      "Landing page for Parkway Wallet, a fintech app available on iOS and Android, built during an internship at Parkway Projects Ltd.",
+    longDescription:
+      "Built during an internship at Parkway Projects Ltd in 2023, this project was my first professional team environment. Solely responsible for developing the landing page including all animations, transitions, and interactive functionalities for the Parkway Wallet app, which is live on the App Store and Google Play.",
+    tech: ["HTML", "CSS", "Javascript"],
+    live: "https://wallet.parkway.ng/",
+    github: null,
+    image: "/parkway.avif",
+    featured: true,
+  },
+  {
+    id: 7,
+    title: "ao2 Designs",
+    description:
+      "Portfolio website for ao2 Designs, featuring smooth animations and transitions.",
+    longDescription:
+      "Designed and developed a single-page portfolio for UI/UX designer Olanrewaju Alalade. Built with Next.js and CSS Modules, with Framer Motion handling all animations and page transitions to complement the designer's visual identity.",
+    tech: ["Next.js", "CSS", "Framer Motion"],
+    live: "https://ao2designs.vercel.app/",
+    github: null,
+    image: "/ao2.avif",
+    featured: true,
+  },
+  {
+    id: 8,
     title: "Habit Tracker",
     description:
       "PWA for tracking daily habits with streak tracking, offline support, and no backend required.",
@@ -71,6 +116,7 @@ export const projects: Project[] = [
     featured: true,
   },
   {
+    id: 9,
     title: "IP Address Tracker",
     description:
       "IP lookup and interactive map visualization using the ipify API and Leaflet.js.",

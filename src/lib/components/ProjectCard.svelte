@@ -69,8 +69,6 @@
             /></svg
           >
         </a>
-      {:else}
-        <span class="card-link muted">Classified 🔒</span>
       {/if}
     </div>
   </div>
