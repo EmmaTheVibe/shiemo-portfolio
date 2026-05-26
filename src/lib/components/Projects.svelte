@@ -29,7 +29,7 @@
   });
 </script>
 
-<section id="projects" bind:this={el} class="projects">
+<section id="projects" bind:this={el} class="projects" class:featured>
   <div class="projects-inner">
     <div class="section-header">
       <p class="section-label">{label}</p>
@@ -104,7 +104,7 @@
   }
 
   @media (max-width: 1280px) {
-    .projects {
+    .projects.featured {
       padding-top: 50px;
       padding-bottom: 50px;
     }
