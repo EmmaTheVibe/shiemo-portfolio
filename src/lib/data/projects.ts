@@ -119,6 +119,7 @@ export const projects: Project[] = [
     live: "https://habit-tracker-hng.vercel.app/",
     github: "https://github.com/EmmaTheVibe/habit-tracker",
     image: "/habit-tracker.avif",
+    gif: "/habit.gif",
     featured: true,
   },
   {
@@ -132,6 +133,7 @@ export const projects: Project[] = [
     live: "https://ip-address-tracker-sigma-two.vercel.app/",
     github: "https://github.com/EmmaTheVibe/ip-address-tracker",
     image: "/ip.avif",
+    gif: "/ip.gif",
     featured: true,
   },
 ];
