@@ -7,6 +7,7 @@ export type Project = {
   live: string;
   github: string | null;
   image: string;
+  gif?: string;
   featured: boolean;
 };
 
@@ -22,6 +23,7 @@ export const projects: Project[] = [
     live: "https://coinview-rose.vercel.app/",
     github: "https://github.com/EmmaTheVibe/coinview",
     image: "/coinview.avif",
+    gif: "/coinview.gif",
     featured: true,
   },
   {
@@ -35,6 +37,7 @@ export const projects: Project[] = [
     live: "https://yapp-mvp.vercel.app/",
     github: "https://github.com/EmmaTheVibe/yap",
     image: "/yapp.avif",
+    gif: "/yapp.gif",
     featured: true,
   },
   {
@@ -48,6 +51,7 @@ export const projects: Project[] = [
     live: "https://jadootravel-alpha.vercel.app/",
     github: "https://github.com/EmmaTheVibe/agency-landing-page",
     image: "/jadoo.avif",
+    gif: "/jadoo.gif",
     featured: true,
   },
   {
@@ -61,6 +65,7 @@ export const projects: Project[] = [
     live: "https://weather-now-seven-kohl.vercel.app/",
     github: "https://github.com/EmmaTheVibe/weather-now",
     image: "/weather.avif",
+    gif: "/weathernow.gif",
     featured: true,
   },
   {
@@ -100,6 +105,7 @@ export const projects: Project[] = [
     live: "https://ao2designs.vercel.app/",
     github: null,
     image: "/ao2.avif",
+    gif: "/lanre.gif",
     featured: true,
   },
   {

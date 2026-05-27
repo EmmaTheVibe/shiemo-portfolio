@@ -5,7 +5,10 @@
 
 <article class="card glass">
   <div class="card-image">
-    <img src={project.image} alt={project.title} loading="lazy" />
+    <img src={project.image} alt={project.title} loading="lazy" class="static-img" />
+    {#if project.gif}
+      <img src={project.gif} alt={project.title} class="gif-img" />
+    {/if}
     <div class="image-overlay"></div>
   </div>
 
@@ -105,8 +108,19 @@
     transition: transform 0.4s ease;
   }
 
-  .card:hover .card-image img {
+  .gif-img {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .card:hover .static-img {
     transform: scale(1.04);
+  }
+
+  .card:hover .gif-img {
+    opacity: 1;
   }
 
   .image-overlay {
