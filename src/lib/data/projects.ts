@@ -79,6 +79,7 @@ export const projects: Project[] = [
     live: "https://waec-attendance-checker.vercel.app/",
     github: null,
     image: "/waec.avif",
+    gif: "/waec.gif",
     featured: true,
   },
   {
